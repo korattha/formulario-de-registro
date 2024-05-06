@@ -1,46 +1,26 @@
-const form = document.getElementById('form-registro')
-const nomes = [];
-const numero = [];
+const form = document.getElementById('formulario');
+const imgAprovado = '<img src="./imagens/aprovado.png" alt="Salvo"/>';
+const imgReprovado = '<img src="./imagens/reprovado.png" alt="Reprovado"/>';
 
 let linhas = '';
 
-
-form.addEventListener('submit',  function(e) {
+form.addEventListener('submit',function(e) {
     e.preventDefault();
 
-    adicionaLinha();
+    const inputNomeAtividade = document.getElementById('atividade');
+    const inputNotaAtividade = document.getElementById('nota');
 
-    atualizaTabela();
+    let linha = `<tr>`;
+    linha +=  `<td>${inputNomeAtividade.value}</td>`;
+    linha +=  `<td>${inputNotaAtividade.value}</td>`;
+    linha +=  `<td>${inputNotaAtividade.value >= 7 ? imgAprovado:imgReprovado}</td>`;
+    linha +=  `</tr>`;
 
-})
+    linhas += linha;
 
-function adicionaLinha() {
-    const inputNome = document.getElementById('nome-completo')
-    const inputNumeroTel = document.getElementById('numero-tel')
+    const corpoTabela = document.querySelector('tbody');
+    corpoTabela.innerHTML = linhas;
 
-    if (nomes.includes(inputNome.value)){
-        alert('Este Registo já está incluido.')
-    } else if (numero.includes(inputNumeroTel.value)){
-        alert('Este contato já está incluso.')
-    }    else  {
-        nomes.push(inputNome.value)
-        numero.push(inputNumeroTel.value)
-
-    let linha = '<tr>'
-    linha += `<td>${inputNome.value}</td>`;
-    linha += `<td>${inputNumeroTel.value}</td>`;
-    linha += '</tr>'
-
-    linhas += linha
-}
-
-
-
-    inputNome.value = '';
-    inputNumeroTel.value = '';
-}
-
-function atualizaTabela() {
-    const CorpoTable = document.querySelector('tbody') 
-    CorpoTable.innerHTML = linhas
-}
+    inputNomeAtividade.value = '';
+    inputNotaAtividade.value = '';
+});
